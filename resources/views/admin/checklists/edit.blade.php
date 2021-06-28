@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button class="btn btn-sm btn-primary" type="submit"> {{ __('Save') }}</button>
+                                <button class="btn btn-sm btn-primary" type="submit"> {{ __('Save Checklist') }}</button>
                             </div>
                         </form>
                     </div>
@@ -48,18 +48,22 @@
                     </form>
 
                     <hr>
-
-                    <h2>List of Task</h2>
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                     <div class="card">
+                        <div class="card-header"><i class="fa fa-align-justify"></i>List of Tasks</div>
+                        <div class="card-body">
+                            @livewire('tasks-table', ['checklist'=>$checklist])
+                        </div>
+                    </div>
+                    <div class="card">
+                        @if ($errors->storetask->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->storetask->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form action="{{ route('admin.checklists.tasks.store', [$checklist]) }}" method="POST">
                             @csrf
                             <div class="card-header">{{ __('New Task') }}</div>
@@ -69,14 +73,19 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="name">{{ __('Name') }}</label>
-                                            <input class="form-control" name="name"
-                                                type="text" placeholder="Task name">
+                                            <input class="form-control" name="name" type="text" placeholder="Task name"
+                                                value="{{ old('name') }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">{{ __('Description') }}</label>
+                                            <textarea class="form-control" name="description" rows="5"
+                                                value="{{ old('description') }}" id="task-textarea"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button class="btn btn-sm btn-primary" type="submit"> {{ __('Save') }}</button>
+                                <button class="btn btn-sm btn-primary" type="submit"> {{ __('Save Task') }}</button>
                             </div>
                         </form>
                     </div>
@@ -84,4 +93,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+@include('admin.ckeditor')
 @endsection

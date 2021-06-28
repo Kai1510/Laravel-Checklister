@@ -39,7 +39,7 @@ class ChecklistController extends Controller
     public function store(StoreChecklistRequest $request, ChecklistGroup $checklistGroup)
     {
         $checklistGroup->checklists()->create($request->validated());
-        return redirect()->route('home');
+        return redirect()->route('welcome');
     }
 
     /**
@@ -63,7 +63,7 @@ class ChecklistController extends Controller
     public function update(StoreChecklistRequest $request, ChecklistGroup $checklistGroup, Checklist $checklist)
     {
         $checklist->update($request->validated());
-        return redirect()->route('home');
+        return redirect()->route('welcome');
     }
 
     /**
@@ -75,6 +75,6 @@ class ChecklistController extends Controller
     public function destroy(ChecklistGroup $checklistGroup, Checklist $checklist)
     {
         $checklist->delete();
-        return redirect()->route('home');
+        return redirect()->route('welcome');
     }
 }
